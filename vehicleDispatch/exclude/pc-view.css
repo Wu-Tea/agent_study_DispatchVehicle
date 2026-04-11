@@ -1,0 +1,20 @@
+.passenger-alert {
+    border-radius: 4px;
+    background: #F4F7FD;
+    box-sizing: border-box;
+    border: 1px solid #3C83FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    padding: 6px 0;
+
+    img {
+        margin-right: 6px;
+    }
+
+    span {
+        color: #3C83FF;
+        font-size: 14px;
+    }
+}

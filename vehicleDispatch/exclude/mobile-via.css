@@ -1,0 +1,21 @@
+
+
+/* “查看”按钮：相对于 .bracket-container 定位，
+   top: 50% 保证垂直居中，right: 0 后再向右偏移 50% */
+.mobile-revers-btn {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+.left-container {
+    width: 28px;
+    flex: 0 0 28px;   /* 固定宽度 */
+    align-self: stretch; /* 自动拉伸占满父容器的高度 */
+    position: relative;
+}

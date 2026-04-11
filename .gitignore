@@ -5,6 +5,7 @@ funasr-runtime-resources/
 agent/.venv/
 agent/.pytest_cache/
 agent/pytest-cache-files-*/
+agent/dispatch_voice_agent.egg-info/
 agent/.idea/
 **/__pycache__/
 *.py[cod]

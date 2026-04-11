@@ -1,0 +1,45 @@
+
+.right-col {
+    height: 100%;
+    width: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 这里是你必须使用的花括号定位样式 */
+.bracket-container {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #DDDDDD;
+    border-left: none;
+    width: 24px;
+    position: relative;
+}
+
+/* “查看”按钮：相对于 .bracket-container 定位，
+   top: 50% 保证垂直居中，right: 0 后再向右偏移 50% */
+.revers-btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    height: 16px;
+    width: 16px;
+    background: #3C83FF;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+/* “途经点”按钮：块级显示，margin auto 实现水平居中 */
+.plus-btn {
+    display: block;
+    margin: 0 auto 0 auto;
+    color: #333333 !important;
+    position: relative;
+    span {
+        margin-left: 0 !important;
+    }
+}
