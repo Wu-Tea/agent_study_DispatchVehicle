@@ -53,11 +53,13 @@ DispatchVehicle/
 - 结构化提取：DeepSeek
 - 可选 transcript cleanup：Ollama `gemma4:e4b`
 
-## 依赖准备
+## 运行前提与依赖
 
-### 1. ASR 依赖
+### 1. ASR 运行前提
 
-需要本地准备：
+ASR 这部分不是通过依赖文件安装的，而是直接用 Docker 启动 FunASR Runtime 服务。
+
+本地需要准备：
 
 - Docker
 - FunASR 运行镜像
