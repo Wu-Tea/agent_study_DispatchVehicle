@@ -1,0 +1,22 @@
+.claude/
+funasr-runtime-resources/
+
+# Python
+agent/.venv/
+agent/.pytest_cache/
+agent/pytest-cache-files-*/
+agent/.idea/
+**/__pycache__/
+*.py[cod]
+
+# Node / frontend build output
+web/node_modules/
+web/dist/
+web/.idea/
+
+# Editor folders
+**/.vscode/
+
+# Environment files
+.env
+.env.*
