@@ -12,23 +12,12 @@
 
 当前 MVP 范围固定为 `TASK0 + HANDLE`，不处理 `FLAG_BB`。
 
-## 项目结构
-
-```text
-DispatchVehicle/
-├─ agent/                  Python 后端，负责 ASR websocket 接入、cleanup、parse
-├─ web/                    Vue 3 + Vite 前端 Demo
-├─ vehicleDispatch/        原表单相关配置和页面文件
-├─ docs/                   当前状态、设计文档、历史说明
-└─ funasr-runtime-resources/  本地 FunASR 模型目录（未提交到 Git）
-```
-
 ## 技术栈
 
 ### ASR
 
 - FunASR Runtime WebSocket Server
-- Docker 运行
+- 实际通过 Docker 运行
 - 默认监听：`ws://127.0.0.1:10095`
 
 ### Python 后端
@@ -53,25 +42,9 @@ DispatchVehicle/
 - 结构化提取：DeepSeek
 - 可选 transcript cleanup：Ollama `gemma4:e4b`
 
-## 运行前提与依赖
+## 依赖
 
-### 1. ASR 运行前提
-
-ASR 这部分不是通过依赖文件安装的，而是直接用 Docker 启动 FunASR Runtime 服务。
-
-本地需要准备：
-
-- Docker
-- FunASR 运行镜像
-- FunASR 模型目录
-
-仓库里的 `.gitignore` 已排除 `funasr-runtime-resources/`，所以模型资源不会随代码一起提交。默认目录约定是：
-
-```text
-D:\work\AI\DispatchVehicle\funasr-runtime-resources\models
-```
-
-### 2. Python 后端依赖
+### 1. Python 后端依赖
 
 在 PowerShell 中执行：
 
@@ -95,7 +68,7 @@ python -m venv .venv
 - `pytest>=8.2,<9.0`
 - `pytest-asyncio>=0.23,<1.0`
 
-### 3. Web 前端依赖
+### 2. Web 前端依赖
 
 在 PowerShell 中执行：
 
@@ -151,7 +124,7 @@ $env:OLLAMA_KEEP_ALIVE="10m"
 
 建议按下面顺序启动。
 
-### 1. 启动 FunASR
+### 1. 启动 ASR（FunASR Docker）
 
 ```powershell
 docker run --rm -it `
@@ -164,6 +137,7 @@ docker run --rm -it `
 
 注意：
 
+- `-v` 左侧路径替换成你本地的 FunASR 模型目录
 - 不要用 `run_server_2pass.sh` 作为容器入口
 - 这个脚本会把服务放到后台，容器会直接退出
 
@@ -247,7 +221,7 @@ npm run build
 
 ## 已知注意事项
 
-- `funasr-runtime-resources/` 没有提交到仓库，需要各自准备
+- ASR 模型目录没有提交到仓库，需要各自准备
 - `parse` 依赖 DeepSeek，可选的 cleanup 依赖 Ollama
 - `VehicleDispatchForm.vue` 里还有旧录音逻辑遗留，主链路目前仍可正常工作
 - 如果文档和代码冲突，以代码现状为准
