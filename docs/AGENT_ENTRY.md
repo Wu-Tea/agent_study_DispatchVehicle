@@ -1,8 +1,8 @@
 # 派车语音 Agent 入口
 
-本文件是新 session 的唯一入口。
+本文件用于恢复开发上下文。核对日期：2026-09-22。
 
-如果要恢复上下文，先只读本文件；只有在需要细节时，再按本文档给出的索引跳转到对应模块文档。
+如果存在 `.agent-context/handoff.md`，先读交接文件；当前仓库尚未初始化该目录，可从本文件进入，再按需查看 [模块导航](MODULES.md)、[当前状态](CURRENT_STATUS.md) 和 [资料索引](README.md)。
 
 ## 1. 项目一句话目标
 
@@ -65,7 +65,7 @@
 - 后端 cleanup 已接入“规则清洗 + 可选 Ollama cleanup”链路
 - Ollama cleanup 默认带 `keep_alive=10m`
 - parse 响应继续包含 `rawTranscript / cleanedTranscript / cleanupMeta`
-- 后端测试当前通过，最新验证结果为 `20 passed`
+- 后端测试于 2026-09-22 通过，验证结果为 `21 passed`
 - 前端测试当前通过，最新验证结果为 `28 passed`
 - 前端构建当前通过
 
@@ -76,7 +76,7 @@
 - 后端测试当前通过：
   - `D:\work\AI\DispatchVehicle\agent\tests`
 - 最新一次验证结果：
-  - `20 passed`
+  - `21 passed`
 - 前端测试当前通过：
   - `D:\work\AI\DispatchVehicle\web`
 - 最新一次验证结果：
@@ -110,10 +110,10 @@
 - 润色/识别结果要记录到当前 web session
 - session 方案先用 `sessionStorage`
 
-### 当前关于 Ollama 的真实状态
+### Ollama 配置与历史环境
 
-- 本机已安装 `ollama`
-- 本机已有模型：
+- 2026-04-09 文档记录本机已安装 `ollama`；本次未重新确认。
+- 当时记录的本地模型：
   - `gemma4:e4b`
 - Python 后端代码里已经有 Ollama 接入点
 - 当前 cleanup 只有满足以下条件才会真正调用 Ollama：
@@ -129,7 +129,7 @@
 
 - FunASR 监听：`127.0.0.1:10095`
 - 不要用 `run_server_2pass.sh` 作为容器入口
-- 完整启动命令见 [CURRENT_STATUS.md](D:\work\AI\DispatchVehicle\docs\CURRENT_STATUS.md)
+- 完整启动命令见 [CURRENT_STATUS.md](CURRENT_STATUS.md)
 
 ### Python 后端
 
@@ -161,34 +161,34 @@ $env:OLLAMA_KEEP_ALIVE="10m"
 
 ### 后端主线
 
-- [app/main.py](D:\work\AI\DispatchVehicle\agent\app\main.py)
-- [parse.py](D:\work\AI\DispatchVehicle\agent\app\api\parse.py)
-- [parse_service.py](D:\work\AI\DispatchVehicle\agent\app\services\parse_service.py)
-- [deepseek_client.py](D:\work\AI\DispatchVehicle\agent\app\services\deepseek_client.py)
-- [transcript_cleanup.py](D:\work\AI\DispatchVehicle\agent\app\services\transcript_cleanup.py)
-- [ollama_client.py](D:\work\AI\DispatchVehicle\agent\app\services\ollama_client.py)
-- [asr_ws.py](D:\work\AI\DispatchVehicle\agent\app\api\asr_ws.py)
-- [funasr_stream.py](D:\work\AI\DispatchVehicle\agent\app\services\funasr_stream.py)
+- [app/main.py](../agent/app/main.py)
+- [parse.py](../agent/app/api/parse.py)
+- [parse_service.py](../agent/app/services/parse_service.py)
+- [deepseek_client.py](../agent/app/services/deepseek_client.py)
+- [transcript_cleanup.py](../agent/app/services/transcript_cleanup.py)
+- [ollama_client.py](../agent/app/services/ollama_client.py)
+- [asr_ws.py](../agent/app/api/asr_ws.py)
+- [funasr_stream.py](../agent/app/services/funasr_stream.py)
 
 ### 前端主线
 
-- [VehicleDispatchForm.vue](D:\work\AI\DispatchVehicle\web\src\views\VehicleDispatchForm.vue)
-- [useVoiceAgent.js](D:\work\AI\DispatchVehicle\web\src\composables\useVoiceAgent.js)
-- [VoiceRecorderPanel.vue](D:\work\AI\DispatchVehicle\web\src\components\VoiceRecorderPanel.vue)
-- [VoiceConversationDrawer.vue](D:\work\AI\DispatchVehicle\web\src\components\VoiceConversationDrawer.vue)
-- [asrSocket.js](D:\work\AI\DispatchVehicle\web\src\api\asrSocket.js)
-- [agentApi.js](D:\work\AI\DispatchVehicle\web\src\api\agentApi.js)
-- [pcmAudio.js](D:\work\AI\DispatchVehicle\web\src\utils\pcmAudio.js)
-- [voiceConversationSession.js](D:\work\AI\DispatchVehicle\web\src\utils\voiceConversationSession.js)
+- [VehicleDispatchForm.vue](../web/src/views/VehicleDispatchForm.vue)
+- [useVoiceAgent.js](../web/src/composables/useVoiceAgent.js)
+- [VoiceRecorderPanel.vue](../web/src/components/VoiceRecorderPanel.vue)
+- [VoiceConversationDrawer.vue](../web/src/components/VoiceConversationDrawer.vue)
+- [asrSocket.js](../web/src/api/asrSocket.js)
+- [agentApi.js](../web/src/api/agentApi.js)
+- [pcmAudio.js](../web/src/utils/pcmAudio.js)
+- [voiceConversationSession.js](../web/src/utils/voiceConversationSession.js)
 
 ### 核心测试
 
-- [test_cleanup_api.py](D:\work\AI\DispatchVehicle\agent\tests\test_cleanup_api.py)
-- [test_parse_service.py](D:\work\AI\DispatchVehicle\agent\tests\test_parse_service.py)
-- [test_transcript_cleanup.py](D:\work\AI\DispatchVehicle\agent\tests\test_transcript_cleanup.py)
-- [test_ollama_client.py](D:\work\AI\DispatchVehicle\agent\tests\test_ollama_client.py)
-- [useVoiceAgent.test.js](D:\work\AI\DispatchVehicle\web\src\composables\__tests__\useVoiceAgent.test.js)
-- [VehicleDispatchForm.test.js](D:\work\AI\DispatchVehicle\web\src\views\__tests__\VehicleDispatchForm.test.js)
+- [test_cleanup_api.py](../agent/tests/test_cleanup_api.py)
+- [test_parse_service.py](../agent/tests/test_parse_service.py)
+- [test_transcript_cleanup.py](../agent/tests/test_transcript_cleanup.py)
+- [test_ollama_client.py](../agent/tests/test_ollama_client.py)
+- [useVoiceAgent.test.js](../web/src/composables/__tests__/useVoiceAgent.test.js)
+- [VehicleDispatchForm.test.js](../web/src/views/__tests__/VehicleDispatchForm.test.js)
 
 ## 9. 已知问题与风险
 
@@ -200,6 +200,8 @@ $env:OLLAMA_KEEP_ALIVE="10m"
 
 ### 代码侧
 
+- 后端存在历史遗留的硬编码默认 API 凭据；本次未修改，后续应单独移除并轮换。
+- 2026-09-22 自动化验证：后端 21 项、前端 28 项通过，构建通过但有 JS chunk 大于 500 kB 的提示。
 - `VehicleDispatchForm.vue` 里仍有旧的 `handleVoiceStart / handleVoiceStop` 遗留代码
 - 某些文档/终端显示存在中文乱码
 - cleanup / parse 新链路还未完成实机联调验证
@@ -232,28 +234,28 @@ $env:OLLAMA_KEEP_ALIVE="10m"
 
 ### 项目方案总说明
 
-- [agent.md](D:\work\AI\DispatchVehicle\agent.md)
+- [agent.md](../agent.md)
 
 ### 当前状态与启动命令
 
-- [CURRENT_STATUS.md](D:\work\AI\DispatchVehicle\docs\CURRENT_STATUS.md)
+- [CURRENT_STATUS.md](CURRENT_STATUS.md)
 
 ### 已实现说明
 
-- [2026-04-09-voice-history-cleanup-implemented.md](D:\work\AI\DispatchVehicle\docs\2026-04-09-voice-history-cleanup-implemented.md)
+- [2026-04-09-voice-history-cleanup-implemented.md](2026-04-09-voice-history-cleanup-implemented.md)
 
 ### 当前 cleanup / submit 流设计
 
-- [2026-04-09-voice-cleanup-submit-flow-design.md](D:\work\AI\DispatchVehicle\docs\superpowers\specs\2026-04-09-voice-cleanup-submit-flow-design.md)
+- [2026-04-09-voice-cleanup-submit-flow-design.md](superpowers/specs/2026-04-09-voice-cleanup-submit-flow-design.md)
 
 ### 历史实现计划
 
-- [2026-04-09-voice-cleanup-submit-flow.md](D:\work\AI\DispatchVehicle\docs\superpowers\plans\2026-04-09-voice-cleanup-submit-flow.md)
+- [2026-04-09-voice-cleanup-submit-flow.md](superpowers/plans/2026-04-09-voice-cleanup-submit-flow.md)
   - 说明：这是当前 cleanup / submit 链路的实现计划，主要用于追溯拆分，不作为当前状态依据
 
 ### 历史进度快照
 
-- [2026-04-08-voice-agent-progress.md](D:\work\AI\DispatchVehicle\docs\2026-04-08-voice-agent-progress.md)
+- [2026-04-08-voice-agent-progress.md](2026-04-08-voice-agent-progress.md)
   - 说明：这是历史进度快照，不作为当前状态依据
 
 ## 12. 新 Session 建议开场语

@@ -1,6 +1,10 @@
 # 当前状态
 
-更新时间：2026-04-09
+更新时间：2026-09-22。
+
+模块职责见 [模块导航](MODULES.md)，全部资料见 [资料索引](README.md)。
+
+本次仓库核对：已有历史提交；整理前 `main` 与远端 `main` 均为 `0f6eb25`，唯一未提交代码修改是 `agent/main.py` 的默认端口从 `8000` 改为 `8010`，与前端代理及启动文档一致。本次提交保留该修改，并整理文档；没有迁移业务目录或调整业务流程。
 
 ## 1. 项目目标
 
@@ -83,13 +87,15 @@
 - `VehicleDispatchForm.vue` 里仍保留旧的 `handleVoiceStart / handleVoiceStop` 遗留逻辑
 - Ollama cleanup 启用后的真实 cleanup / parse 链路还没有做完整实机验证
 
-### 已验证
+### 已验证（2026-09-22 本次实跑）
 
-- 后端测试当前通过
-- 最新结果：`20 passed`
-- 前端测试当前通过
-- 最新结果：`28 passed`
-- 前端构建当前通过
+| 验证 | 执行目录 | 命令 | 结果 |
+| --- | --- | --- | --- |
+| 后端测试 | `agent/` | `.\.venv\Scripts\python -m pytest -q` | `21 passed` |
+| 前端测试 | `web/` | `npm test` | 10 个测试文件，`28 passed` |
+| 前端构建 | `web/` | `npm run build` | 通过；JS chunk 约 1,037 kB，有大于 500 kB 的提示 |
+
+以上为自动化测试和构建结果，不代表真实麦克风、FunASR、Ollama、DeepSeek 端到端验证通过。
 
 ## 5. 运行预期
 
@@ -155,9 +161,9 @@ ollama run gemma4:e4b "请只回复 ok"
 
 在 `D:\work\AI\DispatchVehicle\web` 启动 Vite dev server。
 
-## 7. 本机事实
+## 7. 历史环境记录
 
-当前机器已确认：
+2026-04-09 的文档曾记录以下环境；本次未重新确认安装与运行状态：
 
 - `ollama` 已安装
 - 本地模型 `gemma4:e4b` 已存在
@@ -165,6 +171,8 @@ ollama run gemma4:e4b "请只回复 ok"
 
 ## 8. 当前风险与注意事项
 
+- `deepseek_client.py` 存在历史遗留的硬编码默认 API 凭据；本次没有更改密钥或重写历史。后续应移除默认凭据并轮换，文档与日志不得复制凭据内容。
+- 前端构建有大文件提示，后续可评估组件按需加载或拆包。
 - Ollama cleanup 代码已接入，但真实 cleanup / submit / parse 链路尚未完成端到端验证
 - `parse_service.py` 的系统 prompt 目前仍使用 `\\uXXXX` 转义形式保存中文字符串；这是编码规避手段，不是产品需求，后续可以再改回字面中文
 - 旧文档和终端输出仍可能出现中文乱码；如果文档和代码冲突，以代码为准

@@ -12,6 +12,15 @@
 
 当前 MVP 范围固定为 `TASK0 + HANDLE`，不处理 `FLAG_BB`。
 
+## 项目导航
+
+- `agent/`：Python / FastAPI 语音与字段解析后端。
+- `web/`：可独立运行的 Vue 派车表单 Demo。
+- `vehicleDispatch/`：原业务 PC / 移动端页面与配置参考，依赖原业务工程。
+- `funasr-runtime-resources/`：本地模型资源，不进入版本控制。
+- [模块与代码导航](./docs/MODULES.md)：模块职责、接口、数据流及修改入口。
+- [项目资料索引](./docs/README.md)：当前文档、设计资料与历史记录。
+
 ## 技术栈
 
 ### ASR
@@ -103,7 +112,7 @@ $env:DEEPSEEK_MODEL="deepseek-chat"
 $env:DEEPSEEK_MAX_TOKENS="800"
 ```
 
-如果不显式设置，代码里仍有默认值/默认地址，但分享给同事时不建议依赖本地默认配置。
+必须自行提供有效的 API 凭据。当前实现仍有历史遗留的硬编码默认凭据；不要依赖或传播该默认值，后续应单独移除并轮换相关凭据。此次资料整理没有修改密钥配置。
 
 ### Ollama 可选 cleanup
 
@@ -213,11 +222,13 @@ npm run build
 
 ## 当前验证状态
 
-最近一次本地验证结果：
+最近一次本地验证（2026-09-22）：
 
 - 后端测试：`21 passed`
 - 前端测试：`28 passed`
 - 前端构建：通过
+- 构建存在单个 JS chunk 大于 500 kB 的提示；详细记录见 [当前状态](./docs/CURRENT_STATUS.md)。
+- 本次未验证真实麦克风、FunASR、Ollama 与 DeepSeek 的端到端链路。
 
 ## 已知注意事项
 
